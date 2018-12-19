@@ -1,20 +1,5 @@
-/* eslint-disable no-console */
-
-const readFile = require('fs-readfile-promise');
-
-if (process.argv.length !== 3) {
-  console.log('Filename required');
-  return;
-}
-
-const filename = process.argv[2];
-
-(async () => {
-  const data = await readFile(filename, 'utf8');
-  const inputs = data
-    .split('\n')
-    .filter(Boolean)
-    .map(i => Number(i));
+module.exports = data => {
+  const inputs = data.map(i => Number(i));
 
   const memo = {};
   let accum = 0;
@@ -24,7 +9,7 @@ const filename = process.argv[2];
     const next = acc + curr;
     if (!ready && memo[next]) {
       ready = true;
-      console.log(next);
+      console.log(next); // eslint-disable-line
     }
     memo[next] = true;
     return next;
@@ -33,4 +18,4 @@ const filename = process.argv[2];
   while (!ready) {
     accum = inputs.reduce(f, accum);
   }
-})();
+};

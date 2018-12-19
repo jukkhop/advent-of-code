@@ -1,21 +1,8 @@
-/* eslint-disable no-console */
-
-const readFile = require('fs-readfile-promise');
 const _ = require('lodash');
 
-if (process.argv.length !== 3) {
-  console.log('Filename required');
-  return;
-}
-
-const filename = process.argv[2];
-
-(async () => {
-  const data = await readFile(filename, 'utf8');
-  const ids = data.split('\n').filter(Boolean);
-
-  const common = ids.reduce((acc1, id, i) => {
-    const sub = ids.reduce((acc2, other, j) => {
+module.exports = inputs => {
+  const common = inputs.reduce((acc1, id, i) => {
+    const sub = inputs.reduce((acc2, other, j) => {
       if (acc2) {
         return acc2;
       }
@@ -39,5 +26,5 @@ const filename = process.argv[2];
     return sub ? acc1.concat(sub) : acc1;
   }, []);
 
-  console.log(common.join(''));
-})();
+  return common.join('');
+};
