@@ -1,30 +1,26 @@
 const _ = require('lodash');
 
 module.exports = inputs => {
-  const common = inputs.reduce((acc1, id, i) => {
-    const sub = inputs.reduce((acc2, other, j) => {
-      if (acc2) {
-        return acc2;
+  const result = inputs.reduce((acc, id, idx) => {
+    const subResult = inputs.reduce((otherAcc, other, otherIdx) => {
+      if (otherAcc) {
+        return otherAcc;
       }
-      if (j <= i) {
-        return acc2;
+      if (otherIdx <= idx) {
+        return otherAcc;
       }
-
-      return [...id].reduce((acc3, _c, k) => {
-        if (acc3) {
-          return acc3;
+      return [...id].reduce((thirdAcc, third, thirdIdx) => {
+        if (thirdAcc) {
+          return thirdAcc;
         }
-
-        const first = _.filter([...id], (_v, m) => m !== k);
-        const second = _.filter([...other], (_v, m) => m !== k);
-
-        const equal = _.isEqual(first, second);
-        return equal ? first : false;
+        const first = _.filter([...id], (val, i) => i !== thirdIdx);
+        const second = _.filter([...other], (val, i) => i !== thirdIdx);
+        return _.isEqual(first, second) ? first : false;
       }, false);
     }, false);
 
-    return sub ? acc1.concat(sub) : acc1;
+    return subResult ? acc.concat(subResult) : acc;
   }, []);
 
-  return common.join('');
+  return result.join('');
 };

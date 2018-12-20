@@ -41,31 +41,19 @@ module.exports = data => {
     }
   });
 
-  let mostSleptGuard = null;
-  let mostSleptMinutes = 0;
-
-  _.forEach(sleepMinutes, (minutes, guard) => {
-    let sleptMinutes = 0;
-
-    _.forEach(minutes, count => {
-      sleptMinutes += count;
-    });
-
-    if (sleptMinutes > mostSleptMinutes) {
-      mostSleptGuard = guard;
-      mostSleptMinutes = sleptMinutes;
-    }
-  });
-
+  let bestGuard = null;
   let bestMinute = null;
   let bestMinuteCount = 0;
 
-  _.forEach(sleepMinutes[mostSleptGuard], (count, minute) => {
-    if (count > bestMinuteCount) {
-      bestMinute = minute;
-      bestMinuteCount = count;
-    }
+  _.forEach(sleepMinutes, (minutes, guard) => {
+    _.forEach(minutes, (count, minute) => {
+      if (count > bestMinuteCount) {
+        bestMinute = minute;
+        bestMinuteCount = count;
+        bestGuard = guard;
+      }
+    });
   });
 
-  return Number(mostSleptGuard) * bestMinute;
+  return Number(bestGuard) * bestMinute;
 };

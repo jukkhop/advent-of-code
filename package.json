@@ -5,7 +5,9 @@
   "dependencies": {
     "babel-eslint": "^10.0.1",
     "fs-readfile-promise": "^3.0.1",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "moment": "^2.23.0",
+    "reverse-string-template": "^1.0.0"
   },
   "devDependencies": {
     "eslint": "^5.10.0",

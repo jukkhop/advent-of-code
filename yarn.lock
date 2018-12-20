@@ -1523,6 +1523,10 @@ mkdirp@^0.5.1:
   dependencies:
     minimist "0.0.8"
 
+moment@^2.23.0:
+  version "2.23.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.23.0.tgz#759ea491ac97d54bac5ad776996e2a58cc1bc225"
+
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
@@ -1916,6 +1920,10 @@ restore-cursor@^2.0.0:
 ret@~0.1.10:
   version "0.1.15"
   resolved "https://registry.yarnpkg.com/ret/-/ret-0.1.15.tgz#b8a4825d5bdb1fc3f6f53c2bc33f81388681c7bc"
+
+reverse-string-template@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/reverse-string-template/-/reverse-string-template-1.0.0.tgz#160d2273a109e5a9a78271046ff48bfa8b1c2b60"
 
 rimraf@^2.2.8, rimraf@~2.6.2:
   version "2.6.2"

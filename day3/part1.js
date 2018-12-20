@@ -1,13 +1,13 @@
 const _ = require('lodash');
 
-const initFabric = (array, value) => {
+const createFabric = (array, value) => {
   _.forEach(_.range(array.length), (_val, idx) => {
     array[idx] = new Array(array.length); // eslint-disable-line
     _.fill(array[idx], value);
   });
 };
 
-const processClaim = claim => {
+const mapClaim = claim => {
   const colonIdx = claim.indexOf(':');
   const claimId = claim.substring(1, claim.indexOf(' '));
   const claimMargins = claim.substring(claim.indexOf('@') + 2, colonIdx);
@@ -22,9 +22,9 @@ const processClaim = claim => {
 };
 
 module.exports = inputs => {
-  const claims = inputs.map(processClaim);
+  const claims = inputs.map(mapClaim);
   const fabric = new Array(2000);
-  initFabric(fabric, 0);
+  createFabric(fabric, 0);
   let overlaps = 0;
 
   // Make claims and count overlaps
