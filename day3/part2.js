@@ -1,41 +1,35 @@
+const tmpl = require('reverse-string-template');
 const _ = require('lodash');
 
-const createFabric = (array, value) => {
-  _.forEach(_.range(array.length), (_val, idx) => {
-    array[idx] = new Array(array.length); // eslint-disable-line
-    _.fill(array[idx], value);
+const mapInput = input =>
+  tmpl(input, '#`id` @ `mLeft`,`mRight`: `width`x`height`', {
+    delimiters: ['`', '`'],
   });
-};
 
-const mapClaim = claim => {
-  const colonIdx = claim.indexOf(':');
-  const claimId = claim.substring(1, claim.indexOf(' '));
-  const claimMargins = claim.substring(claim.indexOf('@') + 2, colonIdx);
-  const claimCoords = claim.substring(colonIdx + 2);
-  const [marginLeft, marginTop] = claimMargins.split(',').map(Number);
-  const [width, height] = claimCoords.split('x').map(Number);
-  const startX = marginLeft + 1;
-  const startY = marginTop + 1;
-  const endX = startX + width;
-  const endY = startY + height;
-  return { claimId, startX, startY, endX, endY };
+const mapClaim = input => {
+  const { id, mLeft, mRight, width, height } = mapInput(input);
+  const startX = Number(mLeft) + 1;
+  const startY = Number(mRight) + 1;
+  const endX = startX + Number(width);
+  const endY = startY + Number(height);
+  return { id, startX, startY, endX, endY };
 };
 
 module.exports = inputs => {
   const claims = inputs.map(mapClaim);
-  const fabric = new Array(2000);
-  createFabric(fabric, 0);
+  const fabric = [];
 
   // Make claims
   _.forEach(claims, claim => {
-    const { claimId, startX, endX, startY, endY } = claim;
-    const rangeX = _.range(startX, endX);
-    const rangeY = _.range(startY, endY);
+    const { id, startX, endX, startY, endY } = claim;
 
-    _.forEach(rangeX, x => {
-      _.forEach(rangeY, y => {
-        if (fabric[x][y] === 0) {
-          fabric[x][y] = claimId;
+    _.forEach(_.range(startX, endX), x => {
+      _.forEach(_.range(startY, endY), y => {
+        if (!fabric[x]) {
+          fabric[x] = [];
+        }
+        if (!fabric[x][y]) {
+          fabric[x][y] = id;
         } else if (fabric[x][y] !== 'X') {
           fabric[x][y] = 'X';
         }
@@ -45,21 +39,19 @@ module.exports = inputs => {
 
   // Check claims
   _.forEach(claims, claim => {
-    const { claimId, startX, endX, startY, endY } = claim;
-    const rangeX = _.range(startX, endX);
-    const rangeY = _.range(startY, endY);
+    const { id, startX, endX, startY, endY } = claim;
     let overlaps = false;
 
-    _.forEach(rangeX, x => {
-      _.forEach(rangeY, y => {
-        if (fabric[x][y] !== claimId) {
+    _.forEach(_.range(startX, endX), x => {
+      _.forEach(_.range(startY, endY), y => {
+        if (fabric[x][y] !== id) {
           overlaps = true;
         }
       });
     });
 
     if (!overlaps) {
-      console.log(claimId); // eslint-disable-line
+      console.log(id); // eslint-disable-line
     }
   });
 };

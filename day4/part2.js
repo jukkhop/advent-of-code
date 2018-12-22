@@ -6,11 +6,9 @@ const mapInput = input =>
   tmpl(input, '[{{date}}] Guard #{{guardId}} {{verb}} {{noun}}') ||
   tmpl(input, '[{{date}}] {{verb}}');
 
-const parseDate = date => moment(date);
-
 module.exports = data => {
   const inputs = data.map(mapInput).map(({ date, ...input }) => ({
-    date: parseDate(date),
+    date: moment(date),
     ...input,
   }));
   const sortedInputs = _.sortBy(inputs, 'date');
