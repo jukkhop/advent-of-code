@@ -18,10 +18,9 @@ const mapClaim = input => {
 module.exports = inputs => {
   const claims = inputs.map(mapClaim);
   const fabric = [];
-  let overlaps = 0;
 
-  // Make claims and count overlaps
-  _.forEach(claims, claim => {
+  return claims.reduce((acc, claim) => {
+    let overlaps = acc;
     const { id, startX, endX, startY, endY } = claim;
 
     _.forEach(_.range(startX, endX), x => {
@@ -37,7 +36,7 @@ module.exports = inputs => {
         }
       });
     });
-  });
 
-  return overlaps;
+    return overlaps;
+  }, 0);
 };
