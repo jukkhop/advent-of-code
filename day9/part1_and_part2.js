@@ -3,9 +3,9 @@
 const tmpl = require('reverse-string-template');
 const _ = require('lodash');
 
-const mapInput = data =>
+const mapInput = input =>
   _.mapValues(
-    tmpl(data, '{{players}} players; last marble is worth {{last}} points'),
+    tmpl(input, '{{players}} players; last marble is worth {{last}} points'),
     value => Number(value),
   );
 
